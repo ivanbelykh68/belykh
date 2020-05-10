@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>belykh</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+	<h1>Word processor</h1>
+    <h2>Input text:</h2>
+	<textarea id="input" style="width: 100%; height: 200px;">сапог сарай арбуз болт бокс биржа</textarea>
+	<input type="button" value="Send" name="Send" id="send" />
+	<hr/>
+	<h2>Result:</h2>
+	<textarea id="result" style="width: 100%; height: 200px;"></textarea>
+	
+	<script>
+		$("#send").click(function(event){
+			$.post("/api/words", {input: $("#input").val(), minSize: "2" })
+				.done(function(data) {
+					$("#result").text(JSON.stringify(data, null, 2));
+				})
+				.fail(function() {
+					alert("Something went wrong");
+				});
+		});
+	</script>
+</body>
+</html>
